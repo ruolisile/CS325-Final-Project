@@ -1,8 +1,11 @@
 import random
 
-populationSize=100
+populationSize = 100
+numberOfGenerations = 100
 repeater = 'CGG'
 standardRepetitions = 30
+
+file=open("finalCSV.csv","w+")
 
 #FMR1 30 CGG
 #ATXN1 33 CAG
@@ -10,12 +13,6 @@ standardRepetitions = 30
 
 population=[]
 tracker=[]
-for i in range(populationSize):
-    gene=''
-    for i in range(standardRepetitions):
-        gene=gene+repeater
-    population.append(gene)
-    tracker.append([])
 
 def repetitions(gene):
     repetitions=0
@@ -35,7 +32,14 @@ def generation(population,tracker):
         tracker[i].append(repetitions(population[i]))
     return population,tracker
 
-for i in range(100):
+for i in range(populationSize):
+    gene=''
+    for i in range(standardRepetitions):
+        gene=gene+repeater
+    population.append(gene)
+    tracker.append([])
+    
+for i in range(numberOfGenerations):
     population,tracker=generation(population,tracker)
 
 for i in population:
@@ -43,5 +47,7 @@ for i in population:
 
 for i in tracker:
     for j in i:
-        print(j,end=',')
-    print()
+        file.write(str(j)+',')
+    file.write("\n")
+    
+file.close()
