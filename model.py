@@ -1,8 +1,9 @@
 import sys, os, random
+import matplotlib.pyplot as plt
 
 pop_size = 10000
-gen_num = 500
-point_mutation = 1.1 * 10 ** (-8)
+gen_num = 1000
+point_mutation = 1.1 * 10 ** (-7)
 """
 This function simuate reproduce with mutation and tendom repeat
 """
@@ -33,11 +34,11 @@ def repetition(dna, repeater):
                     dna[pos] = 'G'
                     dna = "".join(dna)
         pos = pos + 3
-    #tendem repeate
+    #tandem repeate
     k = (len(dna) - 1 - last_pos) / 3
     chance = random.random()
     #print("random chance is ", chance, "prob is ",  (k - 1) * 10 ** (-4))
-    if(chance < (k - 1) * 10 ** (-4)):
+    if(chance < (k - 1) * 10 ** (-3)):
         chance = random.random()
         if(chance < 0.5):
             dna = dna + repeater
@@ -95,16 +96,28 @@ def main(argv):
             
             for i in range(gen_num):
                 for j in range(len(population)):
-                    population[j] = repetition(population[j], repeater)
-                    #print(len(population[j])/3)
-                    if not selection(population[j], condition):
-                        print("num of repeat ",len(population[j]) / 3, " die out")
-                        del population[j] #die out. 
+                    if(j < len(population)):
+                        #print(j)
+                        population[j] = repetition(population[j], repeater)
+                        #print(len(population[j])/3)
+                        if not selection(population[j], condition):
+                            print("num of repeat ",len(population[j]) / 3, "individual ", j,  " die out")
+                            del population[j] #die out. 
+                            print("Delete individal",j, "generation size", len(population))
             total = 0
+            tracker = []
             for i in range(len(population)):
+                tracker.append(len(population[i]) / 3)
                 total = total + len(population[i])/3
             print(gen_num,"generation", len(population), " population avg repeat", total/len(population))
-
+            plt.hist(tracker, bins=40)
+            plt.xlabel('Number of repeats', fontsize = 12)
+            plt.ylabel("Frequency", fontsize = 12)
+            plt.title("Tandem Repeat for Gene " + dna_name)
+            txt = "The frequency distribution for gene " + dna_name + " after " + str(gen_num) + " generations. "
+            txt = txt + str(len(population)) + " out of " + str(pop_size) + " survived."  
+            plt.figtext(0.5, 0.01, txt, wrap=True, horizontalalignment='center', fontsize=12)
+            plt.show()
 
 
 if __name__ == "__main__":
