@@ -108,7 +108,7 @@ def main(argv):
             plt.hist(tracker, bins=40)
             plt.xlabel('Number of repeats', fontsize = 12)
             plt.ylabel("Frequency", fontsize = 12)
-            plt.title("Tandem Repeat for Gene " + dna_name)
+            plt.title("Tandem Repeats for Gene " + dna_name)
             txt = "The frequency distribution for gene " + dna_name + " after " + str(gen_num) + " generations. "
             txt = txt + str(len(population)) + " out of " + str(pop_size) + " survived."  
             plt.figtext(0.5, 0.01, txt, wrap=True, horizontalalignment='center', fontsize=12)
