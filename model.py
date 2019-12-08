@@ -5,7 +5,7 @@ pop_size = 10000
 gen_num = 1000
 point_mutation = 1.1 * 10 ** (-7)
 """
-This function simuate reproduce with mutation and tendom repeat
+This function simuates reproduction with mutation and tandem repeats
 """
 def repetition(dna, repeater):
     last_pos = 0
@@ -34,10 +34,9 @@ def repetition(dna, repeater):
                     dna[pos] = 'G'
                     dna = "".join(dna)
         pos = pos + 3
-    #tandem repeate
+    #tandem repetitions
     k = (len(dna) - 1 - last_pos) / 3
     chance = random.random()
-    #print("random chance is ", chance, "prob is ",  (k - 1) * 10 ** (-4))
     if(chance < (k - 1) * 10 ** (-3)):
         chance = random.random()
         if(chance < 0.5):
@@ -48,8 +47,9 @@ def repetition(dna, repeater):
     return dna
 
 """
-This function simulate selection
-return whether an individual will survive
+This function simulates selection
+It returns whether an individual will survive
+Conditions come from the given file
 """
 def selection(dna, condition):
     survive = True
@@ -59,10 +59,8 @@ def selection(dna, condition):
         upper = int(upper)
         prob = float(prob)
         num_rep = len(dna) / 3
-        #print(lower, upper, num_rep, prob)
         if(num_rep > lower and num_rep < upper):
             chance = random.random()
-            #print("random chance is ", chance)
             if(chance <= prob):
                 survive = False
     return survive
@@ -82,22 +80,19 @@ def main(argv):
             #print(dna_name)
             #print(repeater)
             #print(dna)
-            num_selection = int(file.readline()) #remove newline character
-            #print("num selection is ", num_selection)
+            num_selection = int(file.readline())
             condition = []
             #get selection conditions 
             for i in range(num_selection):
-                condition.append(file.readline()[:-1])
-            #print(condition)
+                condition.append(file.readline()[:-1]) #remove newline character
             #initialize population 
             population = []       
             for i in range(pop_size):
                 population.append(dna)
-            
+            #iterate generations
             for i in range(gen_num):
                 for j in range(len(population)):
                     if(j < len(population)):
-                        #print(j)
                         population[j] = repetition(population[j], repeater)
                         #print(len(population[j])/3)
                         if not selection(population[j], condition):
