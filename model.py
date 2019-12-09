@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 pop_size = 10000
-gen_num = 1000
+gen_num = 1000 # each of these generations actually represents 10 generations combined
 point_mutation = 1.1 * 10 ** (-7)
 """
 This function simuates reproduction with mutation and tandem repeats
