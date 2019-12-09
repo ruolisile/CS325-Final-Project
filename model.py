@@ -106,7 +106,7 @@ def main(argv):
                         total_point = total_point + point
                         if not selection(population[j], condition):
                             print("num of repeat ",len(population[j]) / 3, "individual ", j,  " die out")
-                            del population[j] #die out. 
+                            del population[j] # the lineage dies out 
                             print("Delete individal",j, "generation size", len(population))
             total = 0 #total number of repeat
             tracker = [] #keep number of repeat for individual for the last generation
