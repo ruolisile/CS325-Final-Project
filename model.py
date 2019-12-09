@@ -6,7 +6,7 @@ pop_size = 10000
 gen_num = 1000
 point_mutation = 1.1 * 10 ** (-7)
 """
-This function simuate reproduce with mutation and tendom repeat
+This function simuates reproduction with mutation and tandem repeats
 """
 def repetition(dna, repeater):
     last_pos = 0
@@ -37,10 +37,9 @@ def repetition(dna, repeater):
                 dna[pos] = 'G'
                 dna = "".join(dna)
         pos = pos + 3
-    #tandem repeate
+    #tandem repetitions
     k = (len(dna) - 1 - last_pos) / 3
     chance = random.random()
-    #print("random chance is ", chance, "prob is ",  (k - 1) * 10 ** (-4))
     if(chance < (k - 1) * 10 ** (-3)):
         chance = random.random()
         if(chance < 0.5):
@@ -51,8 +50,9 @@ def repetition(dna, repeater):
     return dna, point_num
 
 """
-This function simulate selection
-return whether an individual will survive
+This function simulates selection
+It returns whether an individual will survive
+Conditions come from the given file
 """
 def selection(dna, condition):
     survive = True
@@ -62,7 +62,6 @@ def selection(dna, condition):
         upper = int(upper) #get upper bound
         prob = float(prob) #get selection pressure
         num_rep = len(dna) / 3
-        #print(lower, upper, num_rep, prob)
         if(num_rep > lower and num_rep < upper):
             chance = random.random() #genrete random chance
             #print("random chance is ", chance)
@@ -120,7 +119,7 @@ def main(argv):
             plt.hist(tracker, bins=40)
             plt.xlabel('Number of repeats', fontsize = 12)
             plt.ylabel("Frequency", fontsize = 12)
-            plt.title("Tandem Repeat for Gene " + dna_name)
+            plt.title("Tandem Repeats for Gene " + dna_name)
             txt = "The frequency distribution for gene " + dna_name + " after " + str(gen_num) + " generations. "
             txt = txt + str(len(population)) + " out of " + str(pop_size) + " survived."  
             plt.figtext(0.5, 0.01, txt, wrap=True, horizontalalignment='center', fontsize=12)
