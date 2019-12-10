@@ -63,8 +63,7 @@ def selection(dna, condition):
         prob = float(prob) #get selection pressure
         num_rep = len(dna) / 3
         if(num_rep > lower and num_rep < upper):
-            chance = random.random() #genrete random chance
-            #print("random chance is ", chance)
+            chance = random.random() #generate random chance
             if(chance <= prob):
                 survive = False
     return survive
@@ -81,7 +80,7 @@ def main(argv):
     file = open(argv[1], "r") 
 
     for line in file:
-        if(line[0] == ">"): #only process DNA name start with ">"
+        if(line[0] == ">"): #only process DNA names starting with ">"
             dna_name, repeater, dna = line.split(" ") #get gene name, repeater, and dna sequence 
             dna_name = dna_name[1:] 
             dna = dna[:-1]
@@ -98,18 +97,20 @@ def main(argv):
             for i in range(pop_size):
                 population.append(dna)
             total_point = 0
+            
+            #iterate generations
             for i in range(gen_num):
                 for j in range(len(population)):
                     if(j < len(population)):
-                        #print(j)
                         population[j], point = repetition(population[j], repeater)
                         total_point = total_point + point
                         if not selection(population[j], condition):
                             print("num of repeat ",len(population[j]) / 3, "individual ", j,  " die out")
                             del population[j] # the lineage dies out 
                             print("Delete individal",j, "generation size", len(population))
-            total = 0 #total number of repeat
-            tracker = [] #keep number of repeat for individual for the last generation
+                            
+            total = 0 #total number of repeats
+            tracker = [] #keep number of repeats for lineage for the last generation
             for i in range(len(population)):
                 tracker.append(len(population[i]) / 3)
                 total = total + len(population[i])/3
@@ -124,7 +125,7 @@ def main(argv):
             txt = txt + str(len(population)) + " out of " + str(pop_size) + " survived."  
             plt.figtext(0.5, 0.01, txt, wrap=True, horizontalalignment='center', fontsize=12)
             plt.show()
-            df = pd.DataFrame(tracker).describe() #get statistical distription 
+            df = pd.DataFrame(tracker).describe() #get statistical distribution 
             print(df)
 
 
